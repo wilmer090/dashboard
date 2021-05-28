@@ -28,6 +28,7 @@ import {apiContext} from '../contextApi'
 // }
 
 function descendingComparator(a, b, orderBy) {
+
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -57,7 +58,7 @@ const headCells = [
   { id: 'ArticleUrl', numeric: false, disablePadding: true, label: 'Article URL' },
   { id: 'publication', numeric: true, disablePadding: false, label: 'Publication' },
   { id: 'CapturedBy ', numeric: true, disablePadding: false, label: 'Captured By' },
-  { id: 'DatePublished', numeric: true, disablePadding: false, label: 'Date Published' },
+  { id: 'date_created', numeric: true, disablePadding: false, label: 'Date Published' },
   { id: 'LinkCaptured', numeric: true, disablePadding: false, label: 'Link Captured' },
   { id: 'LinkParsed', numeric: true, disablePadding: false, label: 'Link Parsed' },
   { id: 'Status', numeric: true, disablePadding: false, label: 'Status' }
@@ -248,21 +249,28 @@ const Status = (status) =>{
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export default function EnhancedTable() {
+  // json data from apiContext
   const {data} = useContext(apiContext)
+  // -----END----
+
   const rows = data
   console.log(rows)
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('DatePublished');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  //====================================================================SORTING=============================================================
+
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+    console.log(property)
   };
 
   const handleSelectAllClick = (event) => {
