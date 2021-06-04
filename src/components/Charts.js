@@ -10,7 +10,7 @@ const filterArticlesWithErrorStatus = (data) =>{
     return data.filter(data => data.article_status === "Error")
 }
 
-const ObjectTOArray = (data) =>{
+const objectTOArray = (data) =>{
       return Object.keys(data).map((time) => {
           return [+time, data[time].length]
         });
@@ -70,13 +70,13 @@ const dataProcessor = ({data}) =>{
          
         const numberOfArticles = getCountOfArticles(dataHolder)
 
-        const ArticlesWithErrors = filterArticlesWithErrorStatus(data)
+        const articlesWithErrors = filterArticlesWithErrorStatus(data)
         
-        const numberOfArticlesWithErrors = getCountOfArticlesWithError(ArticlesWithErrors)
+        const numberOfArticlesWithErrors = getCountOfArticlesWithError(articlesWithErrors)
 
-        const resultNumberOfArticles = ObjectTOArray(numberOfArticles)
+        const resultNumberOfArticles = objectTOArray(numberOfArticles)
 
-        const resultNumberOfArticlesWithErrors = ObjectTOArray(numberOfArticlesWithErrors)
+        const resultNumberOfArticlesWithErrors = objectTOArray(numberOfArticlesWithErrors)
 
         console.log('Articles w/ errors: ', resultNumberOfArticlesWithErrors)
         console.log('numberOfArticlesWithErrors', numberOfArticlesWithErrors)
