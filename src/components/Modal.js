@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function TransitionsModal({isModalOpen}) {
-
+export default function TransitionsModal({isModalOpen, props}) {
+  console.log('props', props)
   console.log('isModal',isModalOpen)
   const classes = useStyles();
   const initialRender = useRef(true)
@@ -62,8 +62,14 @@ export default function TransitionsModal({isModalOpen}) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
+            <h2 id="transition-modal-title">{props.time && props.time}</h2>
+            {props.value && props.value.map(prop =>{
+              return (
+                <>
+                <h1>{prop.article_source_url}</h1>
+                </>
+              )
+            })}
           </div>
         </Fade>
       </Modal>

@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 import {apiContext} from '../contextApi'
-import Chart from '../Chart'
+import {Spline, Bar} from '../components/Charts'
 import DataTable from '../components/DataTable'
 import {Typography, Grid, Paper} from '@material-ui/core'
 import useStyles from '../style'
@@ -17,13 +17,13 @@ const Dashboard = () => {
          
           <Grid item xs={6}>
             <Paper className={classes.paper}>
-              <Chart />
+              <Spline />
             </Paper>
           </Grid>
           
           <Grid item xs={6}>
             <Paper className={classes.paper}>
-             {/* <Bar /> */}
+             <Bar />
             </Paper>
           </Grid>
         </Grid>
