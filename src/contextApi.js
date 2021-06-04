@@ -30,7 +30,6 @@ export const DataProvider = (props) =>{
     getData()
   }, [])
 
-  console.log(data)
     return(
         <apiContext.Provider value={{data}}>
             {props.children}

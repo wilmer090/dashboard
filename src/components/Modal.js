@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import DataTableModal from './DataTableModal'
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
@@ -62,14 +63,7 @@ export default function TransitionsModal({isModalOpen, props}) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">{props.time && props.time}</h2>
-            {props.value && props.value.map(prop =>{
-              return (
-                <>
-                <h1>{prop.article_source_url}</h1>
-                </>
-              )
-            })}
+            <DataTableModal props={props}/>
           </div>
         </Fade>
       </Modal>
