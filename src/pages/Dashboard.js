@@ -2,6 +2,7 @@ import React,{useContext} from 'react'
 import {apiContext} from '../contextApi'
 import {Spline, Bar} from '../components/Charts'
 import DataTable from '../components/DataTable'
+import PublicationFilter from '../components/PublicationFilter'
 import {Typography, Grid, Paper} from '@material-ui/core'
 import useStyles from '../style'
 
@@ -13,11 +14,14 @@ const Dashboard = () => {
         <div>
         <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Typography variant="h4">Parsing Dashboard</Typography>
+        <PublicationFilter />
+
         <Grid container direction="row" justify="center" alignItems="center" spacing={3} className={classes.Grid}>
          
           <Grid item xs={6}>
             <Paper className={classes.paper}>
-             <Spline />
+              <Spline />
             </Paper>
           </Grid>
           
@@ -27,8 +31,9 @@ const Dashboard = () => {
             </Paper>
           </Grid>
         </Grid>
-       
+        
         <DataTable />
+
       </main>
         </div>
     )

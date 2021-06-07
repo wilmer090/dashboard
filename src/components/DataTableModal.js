@@ -153,7 +153,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Articles
+          Articles Published
         </Typography>
       )}
 
@@ -248,12 +248,14 @@ const Status = (status) =>{
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-export default function EnhancedTable() {
+export default function EnhancedTable({props}) {
   // json data from apiContext
-  const {data} = useContext(apiContext)
+//   const {data} = useContext(apiContext)
   // -----END----
+  
 
-  const rows = data
+  const rows = props.value
+  const convertISODate = new Date(props.time).toLocaleDateString()
   console.log(rows)
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -339,6 +341,7 @@ export default function EnhancedTable() {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
+          <h4>{convertISODate}</h4>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
