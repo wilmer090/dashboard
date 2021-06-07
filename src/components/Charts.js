@@ -5,23 +5,21 @@ import HighchartsReact from 'highcharts-react-official'
 import Modal from './Modal'
 
 
+class GetArticlesCountAndDate{
+  constructor(data){
+    this.data = data
+  }
 
-const filterArticlesWithErrorStatus = (data) =>{
-    return data.filter(data => data.article_status === "Error")
-}
+  objectTOArray(data){
+    return Object.keys(data).map((time) => {
+        return [+time, data[time].length]
+      });
+  }
+  getCountOfArticles(){
 
-const objectTOArray = (data) =>{
-      return Object.keys(data).map((time) => {
-          return [+time, data[time].length]
-        });
-}
-
-const getCountOfArticles = (data) =>{
-
-    const sample = data.reduce((accu, curr) => {
+    const sample = this.data.reduce((accu, curr) => {
     const date = new Date(curr.date_created).setSeconds(0,0);
     const getTime = new Date(date).getTime()
-
      if (!accu[getTime]) {
        accu[getTime] = [];
       }
@@ -33,96 +31,57 @@ const getCountOfArticles = (data) =>{
     }, {});
   
     return sample
-}
-
-const getCountOfArticlesWithError = (data) =>{
-
-  const sample = data.reduce((accu, curr) => {
-
-  const date = new Date(curr.date_created).setSeconds(0,0);
-
-  const getTime = new Date(date).getTime()
-
-   if (!accu[getTime]) {
-     accu[getTime] = [];
-    }
-
-   accu[getTime].push(curr);
-
-   return accu;
-
-  }, {});
-
-  return sample
-}
-
-const dataProcessor = ({data}) =>{
+  }
+ 
+  dataProcessor(){
     
-    const dataHolder = data
+    const dataHolder = this.data
     
-    if(data){
-
-       dataHolder.sort(function(a, b) {
+    if(this.data){
       
-        return (a.date_created < b.date_created) ? -1 : ((a.date_created > b.date_created) ? 1 : 0);
-        })
+      dataHolder.sort(function(a, b) {
+    
+      return (a.date_created < b.date_created) ? -1 : ((a.date_created > b.date_created) ? 1 : 0);
+      })
+    
+      const numberOfArticles = this.getCountOfArticles()
       
-         
-        const numberOfArticles = getCountOfArticles(dataHolder)
+      const resultNumberOfArticles = this.objectTOArray(numberOfArticles)
 
-        const articlesWithErrors = filterArticlesWithErrorStatus(data)
-        
-        const numberOfArticlesWithErrors = getCountOfArticlesWithError(articlesWithErrors)
-
-        const resultNumberOfArticles = objectTOArray(numberOfArticles)
-
-        const resultNumberOfArticlesWithErrors = objectTOArray(numberOfArticlesWithErrors)
-
-        console.log('Articles w/ errors: ', resultNumberOfArticlesWithErrors)
-        console.log('numberOfArticlesWithErrors', numberOfArticlesWithErrors)
-        console.log('numberOfArticles', numberOfArticles)
-
-        return resultNumberOfArticles
+      console.log('ArticlesNumber: ', resultNumberOfArticles)
+      
+      return resultNumberOfArticles
     }
 
     return
  
 }
 
+}
 
+function converter(item){
+  const date = new Date(item).setSeconds(0,0)
+  const newDate = new Date(date).toISOString()
 
-
-  //======================test area=========================================
-//   const newArr = []
-//   arr.forEach(obj => newArr.push({x: +obj.x, y:obj.y}))
-  
-//   console.log('newarray',newArr)
-//============================end of test area================================
+  return newDate
+}
+ 
 export  function Spline(){
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const data = useContext(apiContext)
-
-  const  processorResult = dataProcessor(data)
-
-  console.log('dataProcessorOutput', processorResult)
-  
   const [props, setProps] = useState([])
 
-  function converter(item){
-    const date = new Date(item).setSeconds(0,0)
-    const newDate = new Date(date).toISOString()
+  const data = useContext(apiContext)
+  
+  const processorResult = new GetArticlesCountAndDate(data.data).dataProcessor()
 
-    return newDate
-  }
-
+// handle modal state
   function handleOpenModal(time,{data} ){
     let props = {}
     const arrayTableValue = data
     time = new Date(time).toISOString()
   
-    console.log('arrayTable', arrayTableValue)
     arrayTableValue.forEach(item => item.date_created  = converter(item.date_created))
     
     const filterForModalTable = arrayTableValue.filter(item => item.date_created === time)
@@ -132,7 +91,6 @@ export  function Spline(){
 
     props = {...props, time:time, value:filterForModalTable}
     setProps(props)
-    console.log("props",props)
   }
 
 
@@ -151,6 +109,9 @@ export  function Spline(){
         text: 'Articles'
       }
     },
+    credits:{
+      enabled: false
+    },
     plotOptions:{
       series:{
         cursor: 'Pointer',
@@ -158,9 +119,6 @@ export  function Spline(){
           events:{
             click: function(){
               handleOpenModal(this.x, data)
-              //alert(this.y)
-              // alert("Category: "  + " Articles: " + this.y)
-              //alert(JSON.stringify(filterForModalTable))
             }
           }
         }
@@ -191,9 +149,37 @@ export  function Spline(){
 
 export function Bar(){
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [props, setProps] = useState([])
+
   const data = useContext(apiContext)
 
-  const processorResult = dataProcessor(data)
+
+  function filterData({data}){
+    return  data.filter(data => data.article_status === "Error")
+  }
+
+  const new_data = filterData(data)
+
+  const processorResult = new GetArticlesCountAndDate(new_data).dataProcessor()
+
+  function handleOpenModal(time,{data} ){
+    let props = {}
+    const arrayTableValue = data
+    time = new Date(time).toISOString()
+  
+    arrayTableValue.forEach(item => item.date_created  = converter(item.date_created))
+    
+    const filterForModalTable = arrayTableValue.filter(item => item.date_created === time && item.article_status === "Error")
+    console.log('updated value',filterForModalTable)
+  
+    setIsModalOpen(isModalOpen => !isModalOpen)
+
+    props = {...props, time:time, value:filterForModalTable}
+    setProps(props)
+    console.log("props",props)
+  }
+
 
    const options = {  
     chart:{
@@ -210,16 +196,16 @@ export function Bar(){
         text: 'Articles'
       }
     },
+    credits:{
+      enabled: false
+    },
     plotOptions:{
       series:{
         cursor: 'Pointer',
         point:{
           events:{
             click: function(){
-              // handleOpenModal(this.x, data)
-              alert(this.y)
-              // alert("Category: "  + " Articles: " + this.y)
-              //alert(JSON.stringify(filterForModalTable))
+              handleOpenModal(this.x, data)
             }
           }
         }
@@ -242,6 +228,7 @@ export function Bar(){
 
     return(
         <>
+         <Modal isModalOpen={isModalOpen} props={props}/>
          <HighchartsReact highcharts={Highcharts} options={options} />       
         </>
     )
