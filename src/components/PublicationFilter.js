@@ -59,27 +59,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-// function getStyles(name, personName, theme) {
-//   return {
-//     fontWeight:
-//       personName.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium,
-//   };
-// }
 
 export default function MultipleSelect() {
   const classes = useStyles();
@@ -91,24 +70,17 @@ export default function MultipleSelect() {
     setPersonName(event.target.value);
   };
 
-  const handleChangeMultiple = (event) => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    setPersonName(value);
-  };
 
+
+  //get publisher name
   const publisher = data.data.map(elem => elem.article_source_url)
+  //remove duplicate
   const publiserSet = [...new Set(publisher)]
   
 
   return (
     <div>
-      <FormControl className={classes.formControl}>
+      <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel id="demo-mutiple-name-label">Publications</InputLabel>
         <Select
         multiple
@@ -116,7 +88,7 @@ export default function MultipleSelect() {
         onChange={handleChange}
         input={<Input />}
         renderValue={(selected) => selected.join(", ")}
-            MenuProps={MenuProps}
+        MenuProps={MenuProps}
         >
             {publiserSet.map((name) => (
             <MenuItem key={name} value={name}>

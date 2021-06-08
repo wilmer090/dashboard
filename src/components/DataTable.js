@@ -254,7 +254,6 @@ export default function EnhancedTable() {
   // -----END----
 
   const rows = data
-  console.log(rows)
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('DatePublished');
@@ -363,13 +362,6 @@ export default function EnhancedTable() {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                   return (
                     <TableRow
-                      // hover
-                      // onClick={(event) => handleClick(event, row.id)}
-                      // role="checkbox"
-                      // aria-checked={isItemSelected}
-                      // tabIndex={-1}
-                      // key={row.id}
-                      // selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
                         {/* <Checkbox

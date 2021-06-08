@@ -265,20 +265,7 @@ export default function EnhancedTable({props}) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   
-  var ts = "2021-05-27T06:30:45.856Z";
-  // console.log(ts);
-  // ts = ts.replace(/\.\d+/, "");
-  // console.log(ts)
-  // let ddd = new Date(ts)
-  // let dddd = ddd.setSeconds(0)
-  // let ddddd = ddd.toString()
-  // console.log(ddddd)
 
-  // let date = new Date(ts)
-  // date.setSeconds(0)
-  // date.toString()
-  
-  // console.log(date)
 
   //====================================================================SORTING=============================================================
 

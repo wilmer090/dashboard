@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function TransitionsModal({isModalOpen, props}) {
-  console.log('props', props)
-  console.log('isModal',isModalOpen)
+  // console.log('props', props)
+  // console.log('isModal',isModalOpen)
   const classes = useStyles();
   const initialRender = useRef(true)
   const [open, setOpen] = useState(false);

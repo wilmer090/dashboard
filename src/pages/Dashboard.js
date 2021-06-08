@@ -5,6 +5,7 @@ import DataTable from '../components/DataTable'
 import PublicationFilter from '../components/PublicationFilter'
 import {Typography, Grid, Paper} from '@material-ui/core'
 import useStyles from '../style'
+import DateRangePicker from '../components/DateRangePicker'
 
 const Dashboard = () => {
     const classes = useStyles()
@@ -14,9 +15,25 @@ const Dashboard = () => {
         <div>
         <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography variant="h4">Parsing Dashboard</Typography>
-        <PublicationFilter />
+        <Grid container direction="row" justify="center" alignItems="center" className={classes.Grid}>
+         
+          <Grid item xs={4}>
+            
+            <Typography variant="h4">Parsing Dashboard</Typography>
+            
+          </Grid>
+          
+          <Grid item xs={4}>
+            
+            <PublicationFilter />
+            
+          </Grid>
+          <Grid item xs={4}>
+            
+            <DateRangePicker />
 
+          </Grid>
+        </Grid> 
         <Grid container direction="row" justify="center" alignItems="center" spacing={3} className={classes.Grid}>
          
           <Grid item xs={6}>

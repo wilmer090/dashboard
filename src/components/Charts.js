@@ -48,7 +48,7 @@ class GetArticlesCountAndDate{
       
       const resultNumberOfArticles = this.objectTOArray(numberOfArticles)
 
-      console.log('ArticlesNumber: ', resultNumberOfArticles)
+      // console.log('ArticlesNumber: ', resultNumberOfArticles)
       
       return resultNumberOfArticles
     }
@@ -85,7 +85,7 @@ export  function Spline(){
     arrayTableValue.forEach(item => item.date_created  = converter(item.date_created))
     
     const filterForModalTable = arrayTableValue.filter(item => item.date_created === time)
-    console.log('updated value',filterForModalTable)
+    // console.log('updated value',filterForModalTable)
   
     setIsModalOpen(isModalOpen => !isModalOpen)
 
@@ -126,7 +126,7 @@ export  function Spline(){
     },
     tooltip: {
       formatter: function() {
-        return '<b>'+ Highcharts.numberFormat(this.y, 0) + ' Article' +'</b><br/>'+ Highcharts.dateFormat('%y-%m-%d %l:%M:%P', this.x,true);
+        return '<b>'+ Highcharts.numberFormat(this.y, 0) + ' Articles' +'</b><br/>'+ Highcharts.dateFormat('%y-%m-%d %l:%M:%P', this.x,true);
      }
     },
     legend: {
@@ -171,13 +171,13 @@ export function Bar(){
     arrayTableValue.forEach(item => item.date_created  = converter(item.date_created))
     
     const filterForModalTable = arrayTableValue.filter(item => item.date_created === time && item.article_status === "Error")
-    console.log('updated value',filterForModalTable)
+    // console.log('updated value',filterForModalTable)
   
     setIsModalOpen(isModalOpen => !isModalOpen)
 
     props = {...props, time:time, value:filterForModalTable}
     setProps(props)
-    console.log("props",props)
+    // console.log("props",props)
   }
 
 
@@ -213,7 +213,7 @@ export function Bar(){
     },
     tooltip: {
       formatter: function() {
-        return '<b>'+ Highcharts.numberFormat(this.y, 0) + ' Article' +'</b><br/>'+ Highcharts.dateFormat('%y-%m-%d %l:%M:%P', this.x,true);
+        return '<b>'+ Highcharts.numberFormat(this.y, 0) + ' Articles' +'</b><br/>'+ Highcharts.dateFormat('%y-%m-%d %l:%M:%P', this.x,true);
      }
     },
     legend: {
